@@ -19,6 +19,7 @@
 		D9EF8FF11B53FDCB00EFC4B6 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF8FED1B53FDCB00EFC4B6 /* TrackCell.swift */; };
 		D9EF8FF21B53FDCB00EFC4B6 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF8FEE1B53FDCB00EFC4B6 /* Track.swift */; };
 		E462F7B0202BA69D0096F540 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = E462F7AF202BA69D0096F540 /* Download.swift */; };
+		E462F7B2202BAEDE0096F540 /* SearchVC+URLSessionDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E462F7B1202BAEDE0096F540 /* SearchVC+URLSessionDelegates.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		D9EF8FED1B53FDCB00EFC4B6 /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 		D9EF8FEE1B53FDCB00EFC4B6 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		E462F7AF202BA69D0096F540 /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
+		E462F7B1202BAEDE0096F540 /* SearchVC+URLSessionDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchVC+URLSessionDelegates.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			children = (
 				D9EF8FE81B53FD6900EFC4B6 /* SearchViewController.swift */,
 				4051C2DD1E078EE00031FE46 /* SearchVC+SearchBarDelegate.swift */,
+				E462F7B1202BAEDE0096F540 /* SearchVC+URLSessionDelegates.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 			files = (
 				E462F7B0202BA69D0096F540 /* Download.swift in Sources */,
 				D9EF8FEA1B53FD6900EFC4B6 /* SearchViewController.swift in Sources */,
+				E462F7B2202BAEDE0096F540 /* SearchVC+URLSessionDelegates.swift in Sources */,
 				409BF3EF1EB80BE2004B06AD /* DownloadService.swift in Sources */,
 				D9EF8FC71B53FD2100EFC4B6 /* AppDelegate.swift in Sources */,
 				18C0C62A1DF4858D00393D33 /* StoryboardSupport.swift in Sources */,
