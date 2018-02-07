@@ -1,9 +1,9 @@
 //
-//  DownloadService.swift
-//  HalfTunes
+//    DownloadService.swift
+//    HalfTunes
 //
-//  Created by brock tyler on 2/7/18.
-//  Copyright © 2018 Ray Wenderlich. All rights reserved.
+//    Created by brock tyler on 2/7/18.
+//    Copyright © 2018 Ray Wenderlich. All rights reserved.
 //
 
 import Foundation
@@ -11,15 +11,16 @@ import Foundation
 // Downloads song snippets, and stores in local file.
 // Allows cancel, pause, resume download.
 class DownloadService {
-
+  
   // SearchViewController creates downloadsSession
   var downloadsSession: URLSession!
-
+  
   // This dict maintains mapping between a URL and its active Download, if any.
   var activeDownloads: [URL: Download] = [:]
   
   // MARK: - Download methods called by TrackCell delegate methods
-
+  
+  // CREATE START DOWNLOAD METHOD TO CREATE DOWNLOAD TASK WHEN USER REQUESTS TRACK DOWNLOAD:
   func startDownload(_ track: Track) {
     // 1. Initialize a Download with the track:
     let download = Download(track: track)
@@ -38,17 +39,39 @@ class DownloadService {
   }
   // TODO: previewURL is http://a902.phobos.apple.com/...
   // why doesn't ATS prevent this download?
-
+  
+  
+  // PAUSE METHOD: Does same thing as cancelDownload(), but produces 'resume data' with enough info to resume download later--assuming supported by host server.
   func pauseDownload(_ track: Track) {
-    // TODO
+    guard let download = activeDownloads[track.previewURL] else { return }
+    
+    if download.isDownloading {
+      download.task?.cancel(byProducingResumeData: { (data) in
+        download.resumeData = data
+      })
+      download.isDownloading = false
+    }
   }
-
+  
+  // CANCEL METHOD: retrieve download task from Download in active downloads dict, call cancel() on it, then remove download object from dict:
   func cancelDownload(_ track: Track) {
-    // TODO
+    if let download = activeDownloads[track.previewURL] {
+      download.task?.cancel()
+      activeDownloads[track.previewURL] = nil
+    }
   }
-
+  
   func resumeDownload(_ track: Track) {
-    // TODO
+    guard let download = activeDownloads[track.previewURL] else { return }
+    
+    if let resumeData = download.resumeData {
+      download.task = downloadsSession.downloadTask(withResumeData: resumeData)
+    } else {
+      download.task = downloadsSession.downloadTask(with: download.track.previewURL)
+    }
+    
+    download.task?.resume()
+    download.isDownloading = true
   }
-
+  
 }

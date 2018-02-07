@@ -1,23 +1,24 @@
 //
-//  QueryService.swift
-//  HalfTunes
+//    QueryService.swift
+//    HalfTunes
 //
-//  Created by brock tyler on 2/7/18.
-//  Copyright © 2018 Ray Wenderlich. All rights reserved.
+//    Created by brock tyler on 2/7/18.
+//    Copyright © 2018 Ray Wenderlich. All rights reserved.
 //
 
 import Foundation
 
 // Runs query data task, and stores results in array of Tracks
 class QueryService {
-
+  
   typealias JSONDictionary = [String: Any]
   typealias QueryResult = ([Track]?, String) -> ()
-
+  
   var tracks: [Track] = []
   var errorMessage = ""
-
-  // Create URLSession and init with default config.
+  
+  // CREATE DATA TASK TO QUERY iTUNES SEARCH API FOR USER'S SEARCH TERM
+  // (1a) Create URLSession and init with default config.
   let defaultSession = URLSession(configuration: .default)
   
   /*
@@ -25,12 +26,12 @@ class QueryService {
    request ot the iTunes Search web service when user performs search.
    
    This data task will be re-initialized whenever user enters a new search string.
- */
+   */
   var dataTask: URLSessionDataTask?
-
+  
   func getSearchResults(searchTerm: String, completion: @escaping QueryResult) {
     
-    // (1) For new user query, cancel the data task if it already exists.
+    // (1b) For new user query, cancel the data task if it already exists.
     // Why? B/c you want to reuse the data task object for this new query.
     dataTask?.cancel()
     
@@ -62,18 +63,18 @@ class QueryService {
       dataTask?.resume()
     }
   }
-
+  
   fileprivate func updateSearchResults(_ data: Data) {
     var response: JSONDictionary?
     tracks.removeAll()
-
+    
     do {
       response = try JSONSerialization.jsonObject(with: data, options: []) as? JSONDictionary
     } catch let parseError as NSError {
       errorMessage += "JSONSerialization error: \(parseError.localizedDescription)\n"
       return
     }
-
+    
     guard let array = response!["results"] as? [Any] else {
       errorMessage += "Dictionary does not contain results key\n"
       return
@@ -92,5 +93,5 @@ class QueryService {
       }
     }
   }
-
+  
 }

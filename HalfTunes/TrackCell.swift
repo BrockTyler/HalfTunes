@@ -1,9 +1,9 @@
 //
-//  TrackCell.swift
-//  HalfTunes
+//    TrackCell.swift
+//    HalfTunes
 //
-//  Created by brock tyler on 2/7/18.
-//  Copyright © 2018 Ray Wenderlich. All rights reserved.
+//    Created by brock tyler on 2/7/18.
+//    Copyright © 2018 Ray Wenderlich. All rights reserved.
 //
 
 import UIKit
@@ -16,7 +16,7 @@ protocol TrackCellDelegate {
 }
 
 class TrackCell: UITableViewCell {
-
+  
   // Delegate identifies track for this cell,
   // then passes this to a download service method.
   var delegate: TrackCellDelegate?
@@ -44,11 +44,11 @@ class TrackCell: UITableViewCell {
   @IBAction func downloadTapped(_ sender: AnyObject) {
     delegate?.downloadTapped(self)
   }
-
+  
   func configure(track: Track, downloaded: Bool) {
     titleLabel.text = track.name
     artistLabel.text = track.artist
-
+    
     // Show/hide download controls Pause/Resume, Cancel buttons, progress info
     // TODO
     // Non-nil Download object means a download is in progress
@@ -58,5 +58,5 @@ class TrackCell: UITableViewCell {
     selectionStyle = downloaded ? UITableViewCellSelectionStyle.gray : UITableViewCellSelectionStyle.none
     downloadButton.isHidden = downloaded
   }
-
+  
 }

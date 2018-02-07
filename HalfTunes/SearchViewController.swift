@@ -1,9 +1,9 @@
 //
-//  SearchViewController.swift
-//  HalfTunes
+//    SearchViewController.swift
+//    HalfTunes
 //
-//  Created by brock tyler on 2/7/18.
-//  Copyright © 2018 Ray Wenderlich. All rights reserved.
+//    Created by brock tyler on 2/7/18.
+//    Copyright © 2018 Ray Wenderlich. All rights reserved.
 //
 
 import UIKit
@@ -22,13 +22,14 @@ class SearchViewController: UIViewController {
   var searchResults: [Track] = []
   let queryService = QueryService()
   let downloadService = DownloadService()
-
+  
   // Get local file path: download task stores tune here; AV player plays it.
   let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
   func localFilePath(for url: URL) -> URL {
     return documentsPath.appendingPathComponent(url.lastPathComponent)
   }
-
+  
+  // CREATE DEDICATED SESSION TO HANDLE DOWNLOAD TASKS, THEN ADD DownloadService PROPERTY TO viewDidLoad():
   lazy var downloadsSession: URLSession = {
     let configuration = URLSessionConfiguration.default
     return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
@@ -39,7 +40,7 @@ class SearchViewController: UIViewController {
     tableView.tableFooterView = UIView()
     downloadService.downloadsSession = downloadsSession
   }
-
+  
   func playDownload(_ track: Track) {
     let playerViewController = AVPlayerViewController()
     present(playerViewController, animated: true, completion: nil)
@@ -57,23 +58,23 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return searchResults.count
   }
-
+  
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell: TrackCell = tableView.dequeueReusableCell(for: indexPath)
-
+    
     // Delegate cell button tap events to this view controller
     cell.delegate = self
-
+    
     let track = searchResults[indexPath.row]
     cell.configure(track: track, downloaded: track.downloaded)
-
+    
     return cell
   }
-
+  
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 62.0
   }
-
+  
   // When user taps cell, play the local file, if it's downloaded
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let track = searchResults[indexPath.row]
@@ -88,7 +89,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 // Called by track cell to identify track for index path row,
 // then pass this to download service method.
 extension SearchViewController: TrackCellDelegate {
-
+  
   func downloadTapped(_ cell: TrackCell) {
     if let indexPath = tableView.indexPath(for: cell) {
       let track = searchResults[indexPath.row]
@@ -96,7 +97,7 @@ extension SearchViewController: TrackCellDelegate {
       reload(indexPath.row)
     }
   }
-
+  
   func pauseTapped(_ cell: TrackCell) {
     if let indexPath = tableView.indexPath(for: cell) {
       let track = searchResults[indexPath.row]
@@ -120,12 +121,12 @@ extension SearchViewController: TrackCellDelegate {
       reload(indexPath.row)
     }
   }
-
+  
   // Update track cell's buttons
   func reload(_ row: Int) {
     tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
   }
-
+  
 }
 
 

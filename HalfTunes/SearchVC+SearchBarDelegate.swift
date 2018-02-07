@@ -1,20 +1,20 @@
 //
-//  SearchVC+SearchBarDelegate.swift
-//  HalfTunes
+//    SearchVC+SearchBarDelegate.swift
+//    HalfTunes
 //
-//  Created by brock tyler on 2/7/18.
-//  Copyright © 2018 Ray Wenderlich. All rights reserved.
+//    Created by brock tyler on 2/7/18.
+//    Copyright © 2018 Ray Wenderlich. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
 extension SearchViewController: UISearchBarDelegate {
-
+  
   @objc func dismissKeyboard() {
     searchBar.resignFirstResponder()
   }
-
+  
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     
     dismissKeyboard()
@@ -36,15 +36,15 @@ extension SearchViewController: UISearchBarDelegate {
       if !errorMessage.isEmpty { print("Search error: " + errorMessage) }
     }
   }
-
+  
   func position(for bar: UIBarPositioning) -> UIBarPosition {
     return .topAttached
   }
-
+  
   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
     view.addGestureRecognizer(tapRecognizer)
   }
-
+  
   func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
     view.removeGestureRecognizer(tapRecognizer)
   }
